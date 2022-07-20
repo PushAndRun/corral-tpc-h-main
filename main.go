@@ -448,6 +448,8 @@ func getLOC(functionName string, filePath string) int {
 		panic(err)
 	}
 
+	err = ast.Print(fset, f)
+
 	functionLength := 0
 
 	ast.Inspect(f, func(n ast.Node) bool {

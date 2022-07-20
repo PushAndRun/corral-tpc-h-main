@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/ISE-SMILE/corral"
+	"github.com/ISE-SMILE/corral/api"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -97,7 +98,9 @@ func (q *Q17) Validate(inputs []string) (bool, error) {
 func (q *Q17) Create() []*corral.Job {
 	stage01 := &Q17PreCollect{q}
 	stage02 := &Q17Finalize{q}
-	return []*corral.Job{corral.NewJob(stage01, stage01), corral.NewJob(stage02, stage02)}
+	return []*corral.Job{
+		corral.NewJobWithComplexityAndTPCHQueryID(stage01, stage01, api.HIGH, api.HIGH, "17"),
+		corral.NewJobWithComplexityAndTPCHQueryID(stage02, stage02, api.EASY, api.EASY, "17")}
 }
 
 type Q17PreCollect struct {

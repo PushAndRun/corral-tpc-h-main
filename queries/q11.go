@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/ISE-SMILE/corral"
+	"github.com/ISE-SMILE/corral/api"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -173,11 +174,11 @@ func (q *Q11) Create() []*corral.Job {
 	}
 
 	return []*corral.Job{
-		corral.NewJob(supplierJoin, supplierJoin),
-		corral.NewJob(partsuppJoin, partsuppJoin),
-		corral.NewJob(sumAvaiableParts, sumAvaiableParts),
-		corral.NewJob(selectValues, selectValues),
-		corral.NewJob(sort, sort),
+		corral.NewJobWithComplexityAndTPCHQueryID(supplierJoin, supplierJoin, api.MEDIUM, api.MEDIUM, "11"),
+		corral.NewJobWithComplexityAndTPCHQueryID(partsuppJoin, partsuppJoin, api.MEDIUM, api.MEDIUM, "11"),
+		corral.NewJobWithComplexityAndTPCHQueryID(sumAvaiableParts, sumAvaiableParts, api.EASY, api.EASY, "11"),
+		corral.NewJobWithComplexityAndTPCHQueryID(selectValues, selectValues, api.EASY, api.EASY, "11"),
+		corral.NewJobWithComplexityAndTPCHQueryID(sort, sort, api.MEDIUM, api.MEDIUM, "11"),
 	}
 }
 
