@@ -141,6 +141,8 @@ func loadConfig() runConfig {
 		delete(conf.CorralConfig, k)
 	}
 
+	conf.CorralConfig["QueryID"] = conf.Query
+
 	return conf
 }
 
