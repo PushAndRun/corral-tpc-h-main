@@ -1,0 +1,10 @@
+corralrc.yaml
+*.csv
+*.tbl
+corral_plus_tpch
+runnable.go
+job*/
+runs/
+*.iml
+test/
+Plots.ipynb

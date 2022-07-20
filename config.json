@@ -1,0 +1,17 @@
+{
+			"backend": "local",
+			"experiment": "1",
+			"undeploy": false,
+			"randomize": false,
+			"validation": false,
+			"verbose": true,
+			"veryverbose": true,
+			"requestPerMinute": 512,
+			"requestBurstRate": 64,
+			"eventBatchSize": 16,
+			"lambdaTimeout": 900,
+			"maxConcurrency": 32,
+			"lambdaMemory": 1024,
+			"query": 5,
+			"cache": "redis"
+}
