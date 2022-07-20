@@ -3,6 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"io"
 	"math/rand"
 	"os"
@@ -434,4 +437,49 @@ func GenerateRunnableFile(c runConfig, query queries.Query) error {
 		return err
 	}
 	return nil
+}
+
+//based on https://tech.ingrid.com/introduction-ast-golang/
+func getLOC(functionName string, filePath string) int {
+
+	fset := token.NewFileSet()
+	f, err := parser.ParseFile(fset, filePath, nil, parser.AllErrors)
+	if err != nil {
+		panic(err)
+	}
+
+	functionLength := 0
+
+	ast.Inspect(f, func(n ast.Node) bool {
+		if fd, ok := n.(*ast.FuncDecl); ok && fmt.Sprint(fd.Name) == functionName {
+			length := getFunctionBodyLength(fd, fset)
+			if err != nil {
+				panic(err)
+			}
+			log.Debug(fmt.Sprintf("Q%d %s -> LOC: %d", config.Query, fd.Name, length))
+			functionLength = length
+		}
+		return true
+	})
+	return functionLength
+}
+
+func getFunctionBodyLength(f *ast.FuncDecl, fs *token.FileSet) int {
+	if fs == nil {
+		log.Error("FileSet is nil")
+		return 0
+	}
+	if f.Body == nil {
+		log.Error("Function body is empty")
+		return 0
+	}
+	if !f.Body.Lbrace.IsValid() || !f.Body.Rbrace.IsValid() {
+		log.Error("function %s is not syntactically valid", f.Name.String())
+		return 0
+	}
+	length := fs.Position(f.Body.Rbrace).Line - fs.Position(f.Body.Lbrace).Line - 1
+	if length > 0 {
+		return length
+	}
+	return 0
 }

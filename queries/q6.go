@@ -117,7 +117,7 @@ func (q *Q6) Validate(inputs []string) (bool, error) {
 }
 
 func (q *Q6) Create() []*corral.Job {
-	return []*corral.Job{corral.NewJob(q, q)}
+	return []*corral.Job{corral.NewJobWithComplexity(q, q)}
 }
 
 /**sql
