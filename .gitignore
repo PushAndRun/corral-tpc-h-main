@@ -9,3 +9,4 @@ runs/
 test/
 Plots.ipynb
 temp/
+config.json

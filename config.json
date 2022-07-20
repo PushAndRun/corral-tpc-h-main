@@ -1,5 +1,5 @@
 {
-			"backend": "local",
+			"backend": "whisk",
 			"experiment": "1",
 			"undeploy": false,
 			"randomize": false,
@@ -13,5 +13,6 @@
 			"maxConcurrency": 32,
 			"lambdaMemory": 1024,
 			"query": 5,
+			"QueryID": 6,
 			"cache": "redis"
 }
