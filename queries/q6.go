@@ -87,6 +87,7 @@ func (q *Q6) Configure() []corral.Option {
 		corral.WithMapBinSize(128 * 1024 * 1024),
 		corral.WithReduceBinSize(64 * 1024 * 1024),
 		corral.WithBackoffPolling(),
+		corral.WithBinSizeLogging(),
 	}
 }
 
