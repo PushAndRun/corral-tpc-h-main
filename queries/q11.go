@@ -41,6 +41,7 @@ func (q *Q11) Configure() []corral.Option {
 		corral.WithReduceBinSize(192 * 1024 * 1024),
 		corral.WithBackoffPolling(),
 		corral.WithBinSizeLogging(),
+		corral.SetExperimentNote("Hello"),
 	}
 }
 
