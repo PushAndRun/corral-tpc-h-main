@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/ISE-SMILE/corral"
+	"github.com/ISE-SMILE/corral/api"
 )
 
 type Q15 struct {
@@ -37,7 +38,8 @@ func (q *Q15) Configure() []corral.Option {
 		corral.WithSplitSize(64 * 1024 * 1024),
 		corral.WithMapBinSize(256 * 1024 * 1024),
 		corral.WithReduceBinSize(128 * 1024 * 1024),
-		corral.WithBackoffPolling(),
+		corral.WithExponentialBackoffPolling(),
+		corral.SetExperimentNote("withoutBinSizeLogging Sync initBackoff:2 maxRetries:5"),
 	}
 }
 
@@ -127,9 +129,9 @@ func (q *Q15) Create() []*corral.Job {
 	max := &Q15SelectMax{}
 
 	return []*corral.Job{
-		corral.NewJob(view, view),
-		corral.NewJob(join, join),
-		corral.NewJob(max, max),
+		corral.NewJobWithComplexityAndTPCHQueryID(view, view, api.EASY, api.EASY, "15"),
+		corral.NewJobWithComplexityAndTPCHQueryID(join, join, api.EASY, api.EASY, "15"),
+		corral.NewJobWithComplexityAndTPCHQueryID(max, max, api.EASY, api.EASY, "15"),
 	}
 }
 

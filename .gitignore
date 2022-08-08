@@ -1,5 +1,4 @@
 corralrc.yaml
-*.csv
 *.tbl
 corral_plus_tpch
 runnable.go

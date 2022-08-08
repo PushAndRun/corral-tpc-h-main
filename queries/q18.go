@@ -2,10 +2,12 @@ package queries
 
 import (
 	"fmt"
-	"github.com/ISE-SMILE/corral"
 	"math/rand"
 	"strconv"
 	"time"
+
+	"github.com/ISE-SMILE/corral"
+	"github.com/ISE-SMILE/corral/api"
 )
 
 type Q18 struct {
@@ -31,6 +33,8 @@ func (q *Q18) Configure() []corral.Option {
 		corral.WithSplitSize(64 * 1024 * 1024),
 		corral.WithMapBinSize(256 * 1024 * 1024),
 		corral.WithReduceBinSize(256 * 1024 * 1024),
+		corral.WithExponentialBackoffPolling(),
+		corral.SetExperimentNote("withoutBinSizeLogging Sync initBackoff:2 maxRetries:5"),
 		//corral.WithInputs(inputTables(q, "customer", "orders", "lineitem")...),
 	}
 }
@@ -138,8 +142,8 @@ func (q *Q18) Create() []*corral.Job {
 	}
 
 	return []*corral.Job{
-		corral.NewJob(orderJoin, orderJoin),
-		corral.NewJob(customerJoin, customerJoin),
-		corral.NewJob(sort, sort),
+		corral.NewJobWithComplexityAndTPCHQueryID(orderJoin, orderJoin, api.MEDIUM, api.MEDIUM, "18"),
+		corral.NewJobWithComplexityAndTPCHQueryID(customerJoin, customerJoin, api.MEDIUM, api.MEDIUM, "18"),
+		corral.NewJobWithComplexityAndTPCHQueryID(sort, sort, api.MEDIUM, api.MEDIUM, "18"),
 	}
 }

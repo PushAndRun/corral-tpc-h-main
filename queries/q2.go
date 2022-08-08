@@ -40,7 +40,7 @@ func (q *Q2) Configure() []corral.Option {
 		corral.WithSplitSize(32 * 1024 * 1024),
 		corral.WithMapBinSize(256 * 1024 * 1024),
 		corral.WithReduceBinSize(128 * 1024 * 1024),
-		corral.WithBackoffPolling(),
+		corral.WithExponentialBackoffPolling(),
 	}
 
 }

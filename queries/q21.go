@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/ISE-SMILE/corral"
+	"github.com/ISE-SMILE/corral/api"
 )
 
 type Q21 struct {
@@ -38,6 +39,8 @@ func (q *Q21) Configure() []corral.Option {
 		corral.WithSplitSize(64 * 1024 * 1024),
 		corral.WithMapBinSize(192 * 1024 * 1024),
 		corral.WithReduceBinSize(192 * 1024 * 1024),
+		corral.WithExponentialBackoffPolling(),
+		corral.SetExperimentNote("withoutBinSizeLogging Sync initBackoff:2 maxRetries:5")),
 	}
 }
 
@@ -156,12 +159,12 @@ func (q *Q21) Create() []*corral.Job {
 	}
 
 	return []*corral.Job{
-		corral.NewJob(nationSuplierJoin, nationSuplierJoin),
-		corral.NewJob(baseJoin, baseJoin),
-		corral.NewJob(lineSuply, lineSuply),
-		corral.NewJob(orderJoin, orderJoin),
-		corral.NewJob(grb, grb),
-		corral.NewJob(sort, sort),
+		corral.NewJobWithComplexityAndTPCHQueryID(nationSuplierJoin, nationSuplierJoin, api.HIGH, api.HIGH, "21"),
+		corral.NewJobWithComplexityAndTPCHQueryID(baseJoin, baseJoin, api.HIGH, api.HIGH, "21"),
+		corral.NewJobWithComplexityAndTPCHQueryID(lineSuply, lineSuply, api.HIGH, api.HIGH, "21"),
+		corral.NewJobWithComplexityAndTPCHQueryID(orderJoin, orderJoin, api.HIGH, api.HIGH, "21"),
+		corral.NewJobWithComplexityAndTPCHQueryID(grb, grb, api.HIGH, api.HIGH, "21"),
+		corral.NewJobWithComplexityAndTPCHQueryID(sort, sort, api.HIGH, api.HIGH, "21"),
 	}
 }
 

@@ -58,11 +58,12 @@ func (q *Q17) Check(driver *corral.Driver) error {
 func (q *Q17) Configure() []corral.Option {
 	return []corral.Option{
 		corral.WithInputs(inputTables(q, "lineitem", "part")...),
-		corral.WithSplitSize(32 * 1024 * 1024),
+		corral.WithSplitSize(64 * 1024 * 1024),
 		corral.WithMapBinSize(128 * 1024 * 1024),
-		corral.WithReduceBinSize(64 * 1024 * 1024),
-		corral.WithBackoffPolling(),
-		corral.SetExperimentNote("Hello"),
+		corral.WithReduceBinSize(32 * 1024 * 1024),
+		corral.WithExponentialBackoffPolling(),
+		corral.WithBinSizeLogging(),
+		corral.SetExperimentNote("SyncCalls BinSizeLogging"),
 	}
 }
 
