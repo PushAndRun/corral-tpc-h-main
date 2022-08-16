@@ -33,8 +33,9 @@ func (q *Q18) Configure() []corral.Option {
 		corral.WithSplitSize(64 * 1024 * 1024),
 		corral.WithMapBinSize(256 * 1024 * 1024),
 		corral.WithReduceBinSize(256 * 1024 * 1024),
-		corral.WithExponentialBackoffPolling(),
-		corral.SetExperimentNote("withoutBinSizeLogging Sync initBackoff:2 maxRetries:5"),
+		corral.WithDNNPolling(),
+		corral.WithBinSizeLogging(),
+		corral.SetExperimentNote("withBinSizeLogging Sync maxRetries:40 const:10 buffer:5"),
 		//corral.WithInputs(inputTables(q, "customer", "orders", "lineitem")...),
 	}
 }
