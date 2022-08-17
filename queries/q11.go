@@ -39,9 +39,9 @@ func (q *Q11) Configure() []corral.Option {
 		corral.WithSplitSize(16 * 1024 * 1024),
 		corral.WithMapBinSize(256 * 1024 * 1024),
 		corral.WithReduceBinSize(192 * 1024 * 1024),
-		corral.WithExponentialBackoffPolling(),
+		corral.WithRegressionPolling(),
 		corral.WithBinSizeLogging(),
-		corral.SetExperimentNote("SyncCalls BinSizeLogging"),
+		corral.SetExperimentNote("fitted"),
 	}
 }
 

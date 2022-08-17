@@ -1,6 +1,6 @@
 {"backend": "whisk",
   "experiment": "10",
-  "query": 17,
+  "query": 10,
   "endpoint": "minio://tpch",
   "minioKey": "iseminio245",
   "minioHost": "10.133.7.5:9000",
