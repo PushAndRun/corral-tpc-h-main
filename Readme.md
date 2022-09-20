@@ -1,3 +1,5 @@
+An adjusted version of the TPC-H queries that work with the extended version of Corral++ (PushAndRun/corral)
+
 # Examples
 
 Corral++ offers many ways to execute and run jobs, this repo implements a set of the TPC-H queries necessary to run the benchmark. This folder contains a set of examples to run the benchmark with different Corral++ deployment modes.
