@@ -36,12 +36,11 @@ func (q *Q11) Configure() []corral.Option {
 
 	return []corral.Option{
 		corral.WithMultiStageInputs(inputs),
-		corral.WithSplitSize(16 * 1024 * 1024),
-		corral.WithMapBinSize(256 * 1024 * 1024),
+		corral.WithSplitSize(32 * 1024 * 1024),
+		corral.WithMapBinSize(192 * 1024 * 1024),
 		corral.WithReduceBinSize(192 * 1024 * 1024),
-		corral.WithRegressionPolling(),
-		corral.WithBinSizeLogging(),
-		corral.SetExperimentNote("fitted"),
+		corral.WithSquaredBackoffPolling(),
+		corral.SetExperimentNote("withoutBinSizeLogging Sync initBackoff:4 maxRetries:5"),
 	}
 }
 

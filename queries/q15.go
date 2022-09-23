@@ -38,9 +38,8 @@ func (q *Q15) Configure() []corral.Option {
 		corral.WithSplitSize(64 * 1024 * 1024),
 		corral.WithMapBinSize(256 * 1024 * 1024),
 		corral.WithReduceBinSize(128 * 1024 * 1024),
-		corral.WithRegressionPolling(),
-		corral.WithBinSizeLogging(),
-		corral.SetExperimentNote("withBinSizeLogging Sync maxRetries:40 const:10 buffer:5"),
+		corral.WithLinearBackoffPolling(),
+		corral.SetExperimentNote("withoutBinSizeLogging Sync maxRetries:5"),
 	}
 }
 
@@ -130,9 +129,9 @@ func (q *Q15) Create() []*corral.Job {
 	max := &Q15SelectMax{}
 
 	return []*corral.Job{
-		corral.NewJobWithComplexityAndTPCHQueryID(view, view, api.EASY, api.EASY, "15"),
-		corral.NewJobWithComplexityAndTPCHQueryID(join, join, api.EASY, api.EASY, "15"),
-		corral.NewJobWithComplexityAndTPCHQueryID(max, max, api.EASY, api.EASY, "15"),
+		corral.NewJobWithComplexityAndTPCHQueryID(view, view, api.MEDIUM, api.MEDIUM, "15"),
+		corral.NewJobWithComplexityAndTPCHQueryID(join, join, api.MEDIUM, api.MEDIUM, "15"),
+		corral.NewJobWithComplexityAndTPCHQueryID(max, max, api.MEDIUM, api.MEDIUM, "15"),
 	}
 }
 
